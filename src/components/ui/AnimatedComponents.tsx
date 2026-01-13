@@ -217,15 +217,17 @@ export function MagneticButton({ children, className }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!ref.current) return;
     const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current!.getBoundingClientRect();
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
     const x = (clientX - left - width / 2) * 0.3;
     const y = (clientY - top - height / 2) * 0.3;
-    ref.current!.style.transform = `translate(${x}px, ${y}px)`;
+    ref.current.style.transform = `translate(${x}px, ${y}px)`;
   };
 
   const handleMouseLeave = () => {
-    ref.current!.style.transform = `translate(0px, 0px)`;
+    if (!ref.current) return;
+    ref.current.style.transform = `translate(0px, 0px)`;
   };
 
   return (
