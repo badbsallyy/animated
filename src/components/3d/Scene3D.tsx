@@ -31,6 +31,12 @@ function AnimatedSphere() {
   );
 }
 
+// Simple seeded random function for deterministic particle positions
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 9999) * 10000;
+  return x - Math.floor(x);
+}
+
 function FloatingParticles() {
   const count = 100;
   const mesh = useRef<THREE.InstancedMesh>(null);
@@ -39,11 +45,11 @@ function FloatingParticles() {
     const temp = [];
     for (let i = 0; i < count; i++) {
       const position = [
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
+        (seededRandom(i * 3) - 0.5) * 20,
+        (seededRandom(i * 3 + 1) - 0.5) * 20,
+        (seededRandom(i * 3 + 2) - 0.5) * 20,
       ];
-      const scale = Math.random() * 0.1 + 0.05;
+      const scale = seededRandom(i * 3 + 3) * 0.1 + 0.05;
       temp.push({ position, scale });
     }
     return temp;
